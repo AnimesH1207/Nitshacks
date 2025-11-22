@@ -1,0 +1,26 @@
+{
+  "name": "skills-passport",
+  "version": "1.0.0",
+  "description": "Decentralized & Privacy-Preserving Skills Passport",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx hardhat node",
+    "compile": "npx hardhat compile",
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost",
+    "register-issuer": "npx hardhat run scripts/registerIssuer.js --network localhost",
+    "serve": "npx http-server -p 8080 -c-1",
+    "test": "npx hardhat test"
+  },
+  "keywords": ["blockchain", "web3", "credentials", "nft"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.19.0",
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}
+

@@ -1,0 +1,7 @@
+node_modules/
+artifacts/
+cache/
+.env
+contract-address.json
+*.log
+

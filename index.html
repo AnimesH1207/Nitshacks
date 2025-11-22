@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFF PORT - Decentralized Credentials</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <h1 class="logo-3d">🎓 PROFF PORT</h1>
+                        <p>Decentralized Credentials Platform</p>
+                    </div>
+                </div>
+                <div class="login-body">
+                    <h2>Welcome Back</h2>
+                    <p class="login-subtitle">Select your access type to continue</p>
+                    <div class="role-selection">
+                        <button class="role-btn" data-role="user">
+                            <div class="role-icon">👤</div>
+                            <div class="role-title">User</div>
+                            <div class="role-desc">View and manage your credentials</div>
+                        </button>
+                        <button class="role-btn" data-role="issuer">
+                            <div class="role-icon">✍️</div>
+                            <div class="role-title">Issuer</div>
+                            <div class="role-desc">Issue credentials to students</div>
+                        </button>
+                        <button class="role-btn" data-role="verifier">
+                            <div class="role-icon">🔍</div>
+                            <div class="role-title">Verifier</div>
+                            <div class="role-desc">Verify credential authenticity</div>
+                        </button>
+                        <button class="role-btn" data-role="dao">
+                            <div class="role-icon">🏛️</div>
+                            <div class="role-title">DAO</div>
+                            <div class="role-desc">Govern issuer registrations</div>
+                        </button>
+                    </div>
+                    <div id="loginStatus" class="login-status" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Connection Prompt (for User, Issuer, DAO) -->
+    <div id="walletConnectionPrompt" class="wallet-prompt" style="display: none;">
+        <div class="wallet-prompt-content">
+            <div class="wallet-prompt-header">
+                <h2>🔗 Connect Your Wallet</h2>
+                <button class="wallet-prompt-close" onclick="hideWalletConnectionPrompt()">&times;</button>
+            </div>
+            <div class="wallet-prompt-body">
+                <p>To access this portal, please connect your Web3 wallet (MetaMask, etc.)</p>
+                <button onclick="connectWalletFromPortal()" class="btn-primary" style="width: 100%; margin-top: 1.5rem; padding: 1rem;">
+                    Connect Wallet
+                </button>
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center;">
+                    Don't have a wallet? <a href="https://metamask.io/" target="_blank" style="color: var(--primary-color);">Install MetaMask</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Portal (hidden initially) -->
+    <div id="main-portal" class="main-portal" style="display: none;">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1 class="logo-3d">🎓 PROFF PORT</h1>
+                <span style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 400;">Decentralized Credentials</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn active" data-page="student">Student Passport</button>
+                <button class="nav-btn" data-page="issuer">Issuer Portal</button>
+                <button class="nav-btn" data-page="verifier">Verifier Tool</button>
+                <button class="nav-btn" data-page="dao">DAO Registry</button>
+            </div>
+            <div class="wallet-section">
+                <div id="walletInfo" class="wallet-info" style="display: none;">
+                    <span id="walletAddress"></span>
+                    <span id="userRoleBadge" class="role-badge"></span>
+                    <button id="logoutBtn" class="logout-btn" title="Logout">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Student Passport Page -->
+        <div id="student-page" class="page active">
+            <div class="page-header">
+                <h2>📜 My Credentials</h2>
+                <p>View all your academic credentials and achievements</p>
+            </div>
+            <div class="content-card">
+                <div style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.75rem; border: 1px solid rgba(6, 182, 212, 0.3);">
+                    <h3 style="margin-bottom: 0.5rem; color: var(--primary-color);">🔐 Zero-Knowledge Proofs</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Generate ZKG proofs for selective disclosure - prove facts without revealing all details</p>
+                </div>
+
+                <!-- Welcome to PROFF PORT -->
+                <div class="welcome-section" style="margin-bottom: 1.5rem; text-align: center; padding: 2rem;">
+                    <div class="empty-state">
+                        <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.6;">🔐</div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Welcome to PROFF PORT</h3>
+                        <p>Connect your wallet to view your credentials.</p>
+                    </div>
+                </div>
+
+                <!-- Anonymous Skill Proofs and edTech Platform Integration - Side by Side -->
+                <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                    <!-- Anonymous Skill Proofs -->
+                    <!-- Yeh karna baki h -->
+                    <div style="flex: 1; min-width: 300px; padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 0.75rem; border: 1px solid rgba(139, 92, 246, 0.3);">
+                        <h3 style="margin-bottom: 0.5rem; color: var(--secondary-color);">🎭 Anonymous Skill Proofs</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Generate completely anonymous proofs of your skills without revealing your identity
+                        </p>
+                        <button onclick="generateAnonymousProof()" class="btn-primary" style="width: 100%;">
+                            Generate Anonymous Skill Proof
+                        </button>
+                        <div id="anonymousProofContainer" style="margin-top: 1rem; display: none;">
+                            <div id="anonymousProofDisplay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Interoperability with edTech Platforms -->
+                    <!-- Yeh karna baki h -->
+                    <div style="flex: 1; min-width: 300px; padding: 1rem; background: rgba(20, 184, 166, 0.1); border-radius: 0.75rem; border: 1px solid rgba(20, 184, 166, 0.3);">
+                        <h3 style="margin-bottom: 0.5rem; color: var(--secondary-color);">🔗 edTech Platform Integration</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Connect and sync your credentials with popular edTech platforms
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <button onclick="connectEdTech('coursera')" class="btn-primary" style="padding: 0.75rem;">Coursera</button>
+                            <button onclick="connectEdTech('udemy')" class="btn-primary" style="padding: 0.75rem;">Udemy</button>
+                            <button onclick="connectEdTech('edx')" class="btn-primary" style="padding: 0.75rem;">edX</button>
+                            <button onclick="connectEdTech('khan')" class="btn-primary" style="padding: 0.75rem;">Khan Academy</button>
+                        </div>
+                        <div id="edTechStatus" style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);"></div>
+                    </div>
+                </div>
+
+                <div id="studentCredentials" class="credentials-list">
+                    <!-- Credentials will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Issuer Portal Page -->
+        <div id="issuer-page" class="page">
+            <div class="page-header">
+                <h2>✍️ Issue Credential</h2>
+                <p>Issue new credentials to students</p>
+            </div>
+            <div class="content-card">
+                <form id="issueCredentialForm" class="form">
+                    <div class="form-group">
+                        <label for="studentAddress">Student Wallet Address</label>
+                        <input type="text" id="studentAddress" placeholder="0x..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="credentialType">Credential Type</label>
+                        <input type="text" id="credentialType" placeholder="e.g., B.Tech Degree, Course Certificate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="institutionName">Institution Name</label>
+                        <input type="text" id="institutionName" placeholder="Your University/Institution" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date (Optional)</label>
+                        <input type="date" id="expiryDate">
+                        <small>Leave empty for permanent credentials</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="metadataURI">Metadata URI (Optional)</label>
+                        <input type="text" id="metadataURI" placeholder="IPFS or other URI">
+                    </div>
+                    
+                    <!-- Multi-Sig Credential Issuance -->
+                    <!-- Yeh karna baki h -->
+                    <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.75rem; border: 1px solid rgba(6, 182, 212, 0.3);">
+                        <h4 style="margin-bottom: 0.75rem; color: var(--primary-color);">🔐 Multi-Signature Issuance</h4>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableMultiSig" style="margin-right: 0.5rem;">
+                                Require multiple signatures for this credential
+                            </label>
+                        </div>
+                        <div id="multiSigFields" style="display: none; margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="requiredSignatures">Required Signatures</label>
+                                <input type="number" id="requiredSignatures" min="2" max="10" value="2" placeholder="Number of required signatures">
+                            </div>
+                            <div class="form-group">
+                                <label for="signerAddresses">Signer Addresses (comma-separated)</label>
+                                <input type="text" id="signerAddresses" placeholder="0x..., 0x..., 0x...">
+                                <small>Enter wallet addresses of authorized signers</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expirable/Revocable Credentials -->
+                    <!-- Yeh karna baki h -->
+                    <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 0.75rem; border: 1px solid rgba(245, 158, 11, 0.3);">
+                        <h4 style="margin-bottom: 0.75rem; color: var(--warning-color);">⏰ Expirable & Revocable Credentials</h4>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableRevocation" style="margin-right: 0.5rem;">
+                                Allow credential revocation
+                            </label>
+                            <small>Issuer can revoke this credential if needed</small>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="enableAutoExpiry" style="margin-right: 0.5rem;">
+                                Enable automatic expiry notification
+                            </label>
+                            <small>Notify student before credential expires</small>
+                        </div>
+                    </div>
+
+                    <!-- Issuer Reputation Score -->
+                    <!-- Yeh karna baki h -->
+                    <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 0.75rem; border: 1px solid rgba(16, 185, 129, 0.3);">
+                        <h4 style="margin-bottom: 0.75rem; color: var(--success-color);">⭐ Your Reputation Score</h4>
+                        <div id="issuerReputation" style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">--</div>
+                            <div>
+                                <div style="font-weight: 600;">Issuer Rating</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">Based on credentials issued and verification rate</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Issue Credential</button>
+                </form>
+                <div id="issuerStatus" class="status-message"></div>
+            </div>
+        </div>
+
+        <!-- Verifier Tool Page -->
+        <div id="verifier-page" class="page">
+            <div class="page-header">
+                <h2>🔍 Verify Credential</h2>
+                <p>Verify the authenticity of a credential</p>
+            </div>
+            <div class="content-card">
+                <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.75rem; border: 1px solid rgba(6, 182, 212, 0.3);">
+                    <h3 style="margin-bottom: 0.5rem; color: var(--primary-color);">🔐 Zero-Knowledge Verification</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Verify credentials using ZKG proofs for privacy-preserving verification</p>
+                </div>
+                <form id="verifyCredentialForm" class="form">
+                    <div class="form-group">
+                        <label for="credentialId">Credential ID</label>
+                        <input type="number" id="credentialId" placeholder="Enter credential ID" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Verify Credential</button>
+                </form>
+                <div style="margin: 2rem 0; text-align: center; color: var(--text-secondary);">OR</div>
+                <form id="verifyZKGForm" class="form">
+                    <div class="form-group">
+                        <label for="zkCommitment">ZKG Commitment Hash</label>
+                        <input type="text" id="zkCommitment" placeholder="0x..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zkProofHash">ZKG Proof Hash</label>
+                        <input type="text" id="zkProofHash" placeholder="0x..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="zkNonce">Nonce</label>
+                        <input type="text" id="zkNonce" placeholder="Enter nonce" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Verify ZKG Proof</button>
+                </form>
+                <div id="verificationResult" class="verification-result"></div>
+                
+                <!-- QR Based Offline Verification -->
+                <!-- Yeh karna baki h -->
+                <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.75rem; border: 1px solid rgba(6, 182, 212, 0.3);">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-color);">📱 QR Code Offline Verification</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Generate QR codes for offline credential verification without internet connection
+                    </p>
+                    <form id="generateQRForm" class="form">
+                        <div class="form-group">
+                            <label for="qrCredentialId">Credential ID for QR Code</label>
+                            <input type="number" id="qrCredentialId" placeholder="Enter credential ID" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Generate QR Code</button>
+                    </form>
+                    <div id="qrCodeContainer" style="margin-top: 1.5rem; text-align: center; display: none;">
+                        <div id="qrCodeDisplay"></div>
+                        <button onclick="downloadQRCode()" class="btn-primary" style="margin-top: 1rem;">Download QR Code</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAO-Governed User Registry Portal -->
+        <!-- Yeh karna baki h -->
+        <div id="dao-page" class="page">
+            <div class="page-header">
+                <h2>🏛️ DAO-Governed Registry</h2>
+                <p>Decentralized governance for issuer registration and management</p>
+            </div>
+            <div class="content-card">
+                <div style="margin-bottom: 2rem; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.75rem; border: 1px solid rgba(6, 182, 212, 0.3);">
+                    <h3 style="margin-bottom: 0.5rem; color: var(--primary-color);">📊 DAO Governance</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                        Propose, vote, and manage issuer registrations through decentralized autonomous organization
+                    </p>
+                </div>
+
+                <!-- Propose New Issuer -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Propose New Issuer</h3>
+                    <form id="proposeIssuerForm" class="form">
+                        <div class="form-group">
+                            <label for="proposedIssuerAddress">Issuer Wallet Address</label>
+                            <input type="text" id="proposedIssuerAddress" placeholder="0x..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="proposedInstitutionName">Institution Name</label>
+                            <input type="text" id="proposedInstitutionName" placeholder="University/Institution Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="proposalDescription">Proposal Description</label>
+                            <textarea id="proposalDescription" rows="3" placeholder="Why should this issuer be registered?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Create Proposal</button>
+                    </form>
+                </div>
+
+                <!-- Active Proposals -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Active Proposals</h3>
+                    <div id="activeProposals" class="proposals-list">
+                        <div class="empty-state">
+                            <p>No active proposals. Create one to get started!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issuer Registry -->
+                <div>
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Registered Issuers</h3>
+                    <div id="registeredIssuers" class="issuers-list">
+                        <div class="empty-state">
+                            <p>Loading registered issuers...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+    <script src="zkg-utils.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
